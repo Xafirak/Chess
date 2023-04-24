@@ -6,7 +6,7 @@ import whiteLogo from '../../assets/white-king.png'
 
 export class King extends Figure {
     isFirstStep: boolean = true
-    canMoveResolved: boolean = false
+
     constructor(color: Colors, cell: Cell) {
         super(color, cell)
         this.logo = color === Colors.BLACK ? blackLogo : whiteLogo
@@ -15,15 +15,7 @@ export class King extends Figure {
 
 
     canMove(target: Cell): boolean {
-        // if (this.isChecked === true) {
-        //     return this.canMoveResolved
-        // } else {
 
-        // проверка возможности рокировки        
-        if (this.isFirstStep === true)
-            if (this.cell.isCastlingAvaliable(target)) {
-                return true
-            }
         if (!super.canMove(target))
             return false
 
@@ -39,14 +31,17 @@ export class King extends Figure {
         if (this.cell.moveDiagonallyKing(target))
             return true
 
-        this.isChecked = true
+        // проверка возможности рокировки        
+        if (this.isFirstStep === true)
+            if (this.cell.isCastlingAvaliable(target)) {
+                return true
+            }
+
         return false
-        // }
     }
 
     moveFigure(target: Cell): void {
         super.moveFigure(target)
-        this.isFirstStep = false
 
         if (target.x === this.cell.x + 2) {
             target.Castling()
@@ -54,5 +49,6 @@ export class King extends Figure {
         else if (target.x === this.cell.x - 2) {
             target.Castling()
         }
+        this.isFirstStep = false
     }
 }

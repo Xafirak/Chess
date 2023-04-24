@@ -15,7 +15,7 @@ const StartGameModal: FC<StartGameModal> = ({ startButton, changeHandler }) => {
             <section className="modal-main">
                 <h1>Введите время игры</h1>
                 <div>
-                    <input onChange={changeHandler} type="text" />
+                    <input onChange={changeHandler} type="number" />
                 </div>
 
                 <div>

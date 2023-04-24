@@ -126,14 +126,14 @@ export class Cell {
    // проверка - если клетка под атакой вражеской фигуры
    // Бага - если 2 короля стоят напротив друг друга, то выбор любого из них приводит 
    // к max callstack exceed
-   cellIsUnderAttack(target: Cell, figure: Figure | null): boolean {
+   cellIsUnderAttack(figure: Figure | null): boolean {
       if (figure?.color === Colors.BLACK) {
          return this.board.whiteFiguesLeft.some(fig =>
-            fig.canMove(target)) ?
+            fig.canMove(this)) ?
             true : false
       } else {
          return this.board.blackFiguesLeft.some(fig =>
-            fig.canMove(target)) ?
+            fig.canMove(this)) ?
             true : false
       }
    }
@@ -142,7 +142,7 @@ export class Cell {
    moveVerticallyKing(target: Cell) {
       if ((target.y === this.y + 1 || target.y === this.y - 1)
          && target.x === this.x
-         && !this.board.getCell(target.x, target.y).cellIsUnderAttack(target, this.figure)
+         && !this.board.getCell(target.x, target.y).cellIsUnderAttack(this.figure)
       )
          return true
    }
@@ -151,7 +151,7 @@ export class Cell {
    moveHorizontallyKing(target: Cell) {
       if ((target.x === this.x + 1 || target.x === this.x - 1)
          && target.y === this.y
-         && !this.board.getCell(target.x, target.y).cellIsUnderAttack(target, this.figure)
+         && !this.board.getCell(target.x, target.y).cellIsUnderAttack(this.figure)
       ) return true
    }
 
@@ -159,7 +159,7 @@ export class Cell {
    moveDiagonallyKing(target: Cell) {
       if ((target.y === this.y + 1 || target.y === this.y - 1)
          && (target.x === this.x + 1 || target.x === this.x - 1)
-         && !this.board.getCell(target.x, target.y).cellIsUnderAttack(target, this.figure)
+         && !this.board.getCell(target.x, target.y).cellIsUnderAttack(this.figure)
       ) return true
    }
 
@@ -171,10 +171,10 @@ export class Cell {
 
       // проверка, сходила ли ладья перед рокировкой, добавил новое
       // свойство firstStep в Figures
-      (this.board.getCell(this.x + 3, target.y).figure?.firstStep === true) ?
+      (this.board.getCell(this.x + 3, this.y).figure?.firstStep === true) ?
          rightRook = true : rightRook = false;
 
-      (this.board.getCell(this.x - 4, target.y).figure?.firstStep === true) ?
+      (this.board.getCell(this.x - 4, this.y).figure?.firstStep === true) ?
          leftRook = true : leftRook = false;
 
 
@@ -182,13 +182,13 @@ export class Cell {
       if ((
          target.x === this.x + 2
          && this.board.getCell(target.x - 1, target.y).isEmpty()
-         && this.board.getCell(this.x + 3, target.y).figure?.name === FigureNames.ROOK
+         && this.board.getCell(target.x + 1, target.y).figure?.name === FigureNames.ROOK
          && rightRook
          ||
          target.x === this.x - 2
          && this.board.getCell(target.x + 1, target.y).isEmpty()
          && this.board.getCell(target.x - 1, target.y).isEmpty()
-         && this.board.getCell(this.x - 4, target.y).figure?.name === FigureNames.ROOK
+         && this.board.getCell(target.x - 2, target.y).figure?.name === FigureNames.ROOK
          && leftRook
       )
          && target.y === this.y

@@ -22,7 +22,6 @@ export class Figure {
     firstStep: boolean
     blackKingIsUnderAttack: boolean
     whiteKingIsUnderAttack: boolean
-    isChecked: boolean
 
     constructor(color: Colors, cell: Cell) {
         this.color = color;
@@ -34,7 +33,6 @@ export class Figure {
         this.firstStep = true
         this.blackKingIsUnderAttack = false
         this.whiteKingIsUnderAttack = false
-        this.isChecked = false   // Добавил для устранения баги королей
     }
 
 
@@ -52,13 +50,10 @@ export class Figure {
             if (target.figure?.color === this.color)
                 return false
         }
-
         return true
     }
 
     moveFigure(target: Cell) {
         this.firstStep = false
-        this.isChecked = false
     }
-
 }

@@ -102,13 +102,8 @@ export class Board {
 
     private addKings() {
 
-        // this.blackFiguesLeft.push(
-            new King(Colors.BLACK, this.getCell(4, 0))
-        // )
-
-        // this.whiteFiguesLeft.push(
-            new King(Colors.WHITE, this.getCell(4, 7))
-        // )
+        new King(Colors.BLACK, this.getCell(4, 0))
+        new King(Colors.WHITE, this.getCell(4, 7))
     }
 
     private addQueens() {
