@@ -182,17 +182,21 @@ export class Cell {
       if ((
          target.x === this.x + 2
          && this.board.getCell(target.x - 1, target.y).isEmpty()
+         && !this.board.getCell(target.x - 1, target.y).cellIsUnderAttack(this.figure)
          && this.board.getCell(target.x + 1, target.y).figure?.name === FigureNames.ROOK
          && rightRook
          ||
          target.x === this.x - 2
          && this.board.getCell(target.x + 1, target.y).isEmpty()
+         && !this.board.getCell(target.x + 1, target.y).cellIsUnderAttack(this.figure)
          && this.board.getCell(target.x - 1, target.y).isEmpty()
+         && !this.board.getCell(target.x - 1, target.y).cellIsUnderAttack(this.figure)
          && this.board.getCell(target.x - 2, target.y).figure?.name === FigureNames.ROOK
          && leftRook
       )
          && target.y === this.y
          && this.board.getCell(target.x, target.y).isEmpty()
+         && !this.board.getCell(target.x, target.y).cellIsUnderAttack(this.figure)
       ) return true
 
       return false

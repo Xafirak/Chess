@@ -6,6 +6,9 @@ import whiteLogo from '../../assets/white-king.png'
 
 export class King extends Figure {
     isFirstStep: boolean = true
+    isChecked: boolean = false
+    resultOfCanMove: boolean = false
+    lastTarget!: Cell | null;
 
     constructor(color: Colors, cell: Cell) {
         super(color, cell)
@@ -42,6 +45,7 @@ export class King extends Figure {
 
     moveFigure(target: Cell): void {
         super.moveFigure(target)
+        this.lastTarget = null
 
         if (target.x === this.cell.x + 2) {
             target.Castling()
